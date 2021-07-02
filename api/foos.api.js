@@ -1,20 +1,26 @@
 const express = require('express');
 const router = express.Router();
 
-// 1. C.R.U.D.
-// 2. R.E.S.T.
+// Concept #1. C.R.U.D. a resource using R.E.S.T.
 
 router.get('/', function(req, res, next) {
-  res.send('respond with a list of foos');
+  res.status(200).json({ foos: ["spam", "ham", "eggs", "foo", "bar"] });
 });
-router.get('/:id', function(req, res, next) {
-  res.send('individual foo');
+
+router.get("/:id", function (req, res, next) {
+  res.status(200).json({ foo: 'individualFoo' });
 });
+
+router.post('/', function(req, res, next) {
+  res.status(201).json({ foo: "newlyCreatedFoo" });
+});
+
 router.patch('/:id', function(req, res, next) {
-  res.send('update an individual foo');
+  res.status(202).json({ foo: "updatedFoo" });
 });
+
 router.delete('/', function(req, res, next) {
-  res.send("delete an individual foo");
+  res.status(202).json({ foo: "deletedFoo" });
 });
 
 module.exports = router;
