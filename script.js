@@ -1,6 +1,12 @@
+function gotoPage(id) {
+  console.log('hi', id)
+  window.location.replace('http://localhost:5500/job.html?id=' + id)
+}
+
+
 function renderJob(j) {
   return `
-  <div class="col">
+  <div class="col" onclick="gotoPage('${j.id}')">
             <div class="card shadow-sm">
               <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg"
                 role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
@@ -9,7 +15,7 @@ function renderJob(j) {
                   dy=".3em">Thumbnail</text>
               </svg>
               <div class="card-body">
-                <p class="card-text">${j.city}</p>
+                <p class="card-text">${j.title} ${j.city}</p>
                 <div class="d-flex justify-content-between align-items-center">
                   <div class="btn-group">
                     <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
@@ -28,7 +34,7 @@ let jobs = []
 async function getJobs() {
   const response = await fetch("http://localhost:3000/api/jobs");
   const json = await response.json();
-  jobs = json
+  jobs = json.slice(0, 20)
   renderJobs()
 }
 getJobs();
@@ -41,7 +47,7 @@ function renderJobs() {
   document.getElementById('jobList').innerHTML = jobsHTML.join('')
 }
 
-getJobs()
+getJobs();
 
 
 const form = document.getElementById('jobCreate')
